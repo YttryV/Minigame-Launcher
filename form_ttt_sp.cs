@@ -13,10 +13,10 @@ namespace Minigame_Launcher
 {
     public partial class form_ttt_sp  : Form
     {
-        int wplayer_choiced = -1, // 0 = O, 1 = X; змінна яка зберігає значення того що саме обрав ігрок Х чи О
-            if_player_chice_done = 0, // змінна яка зберігає значення того чи обрав ігрок Х чи О
-            bot_dif = 0, // змінна яка зберігає складність інтелекту комп'ютера
-            xowins = 0, // змінна вказуюча чи перемог будь який з ігроків
+        int whatPlayerChoice = -1, // 0 = O, 1 = X; змінна яка зберігає значення того що саме обрав ігрок Х чи О
+            playerChoiceXOrO = 0, // змінна яка зберігає значення того чи обрав ігрок Х чи О
+            botDifficult = 0, // змінна яка зберігає складність інтелекту комп'ютера
+            isAnyoneWin = 0, // змінна вказуюча чи перемог будь який з ігроків
             xox = 0, // допоміжна змінна для інтелекту комп'ютера
             xo1 = 0, xo2 = 0, xo3 = 0, xo4 = 0, xo5 = 0, xo6 = 0, xo7 = 0, xo8 = 0, xo9 = 0; // змінні які кожна відносяться до основних кнопок керування грою з 1 до 9
         // створення шляху до фото що використовуються у программі, шлях встановлюється від поточного .ехе файлу
@@ -53,23 +53,23 @@ namespace Minigame_Launcher
         // метод кнопки налаштування складності інтелекту комп'ютера
         private void but_difficulty_Click(object sender, EventArgs e)
         {
-            if (bot_dif == 0)
+            if (botDifficult == 0)
             {
                 label_context.Font = new Font("Segoe UI", 17F, FontStyle.Bold, GraphicsUnit.Point);
                 label_context.Text = "Medium Difficult";
-                bot_dif = 1;
+                botDifficult = 1;
             }
-            else if (bot_dif == 1)
+            else if (botDifficult == 1)
             {
                 label_context.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
                 label_context.Text = "Hard Difficult";
-                bot_dif = 2;
+                botDifficult = 2;
             }
-            else if (bot_dif == 2)
+            else if (botDifficult == 2)
             {
                 label_context.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
                 label_context.Text = "Easy Difficult";
-                bot_dif = 0;
+                botDifficult = 0;
             }
         }
         // ПРИМІТКА:
@@ -80,19 +80,19 @@ namespace Minigame_Launcher
         // метод одної з основних кнопок керування грою
         private void but_xo1_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0) // не продовжуємо код якщо ігрок не обрав Х чи О
+            if (playerChoiceXOrO == 0) // не продовжуємо код якщо ігрок не обрав Х чи О
             { }
-            else if (if_player_chice_done == 1) // якщо ігрок обрав сторону продовжуємо код
+            else if (playerChoiceXOrO == 1) // якщо ігрок обрав сторону продовжуємо код
             {
                 if (xo1 == 1 || xo1 == 2)
                 { } // якщо кнопка зайнята не виконуємо код, зроблено для уникнення ходу комп'ютера навіть якщо ігрок не поставив свій знак
                 else if (xo1 == 0)
                 { // якщо кнопка не зайнята продовжуємо
-                    if (wplayer_choiced == 1) // якщо ігрок обрав Х
+                    if (whatPlayerChoice == 1) // якщо ігрок обрав Х
                     {
-                        if (xowins == 0) // якщо змінна перемог = 0, то кнопка діє
+                        if (isAnyoneWin == 0) // якщо змінна перемог = 0, то кнопка діє
                         {
-                            if (bot_dif == 0) // якщо ігрок обрав складність комп'ютера "easy"
+                            if (botDifficult == 0) // якщо ігрок обрав складність комп'ютера "easy"
                             {
                                 if (xo1 == 2) // якщо комірка зайнята О не займаємо її
                                 { }
@@ -103,9 +103,9 @@ namespace Minigame_Launcher
                                     but_xo1.Image = Image.FromFile(pathtocross); // візуалізуємо для користовача займання комірки
                                     xo1 = 1; // займаємо комірку
                                 }
-                                easy_bot_intelect_o(); // метод інтелекту рівня легко
+                                easy_bot_intellect_o(); // метод інтелекту рівня легко
                             } // далі пеевірка йде на теж саме але змінена важкість змінена
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo1 == 2)
                                 { }
@@ -116,9 +116,9 @@ namespace Minigame_Launcher
                                     but_xo1.Image = Image.FromFile(pathtocross);
                                     xo1 = 1;
                                 }
-                                medium_bot_intelect_o(); // метод інтелекту рівня середньо
+                                medium_bot_intellect_o(); // метод інтелекту рівня середньо
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo1 == 2)
                                 { }
@@ -129,17 +129,17 @@ namespace Minigame_Launcher
                                     but_xo1.Image = Image.FromFile(pathtocross);
                                     xo1 = 1;
                                 }
-                                hard_bot_intelect_o(); // метод інтелекту рівня важко
+                                hard_bot_intellect_o(); // метод інтелекту рівня важко
                             }
-                            wincheck();
+                            winCheck();
                         } // якщо змінна перемог не = 0, то код не виконується та гра стоїть на місті до натискання кнопки рестарту
                     } // якщо ігрок обрав О
-                    else if (wplayer_choiced == 0) // усе від цієї строки до кінця методу є майже повністю однаковим з минулою частиною методу,
+                    else if (whatPlayerChoice == 0) // усе від цієї строки до кінця методу є майже повністю однаковим з минулою частиною методу,
                                                    // але якщо грок обрав грати за О, тому опис буде мінімальним
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo1 == 2)
                                 { }
@@ -150,9 +150,9 @@ namespace Minigame_Launcher
                                     but_xo1.Image = Image.FromFile(pathtocircle);
                                     xo1 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo1 == 2)
                                 { }
@@ -163,9 +163,9 @@ namespace Minigame_Launcher
                                     but_xo1.Image = Image.FromFile(pathtocircle);
                                     xo1 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo1 == 2)
                                 { }
@@ -176,9 +176,9 @@ namespace Minigame_Launcher
                                     but_xo1.Image = Image.FromFile(pathtocircle);
                                     xo1 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -187,19 +187,19 @@ namespace Minigame_Launcher
 
         private void but_xo2_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0)
+            if (playerChoiceXOrO == 0)
             { }
-            else if (if_player_chice_done == 1)
+            else if (playerChoiceXOrO == 1)
             {
                 if (xo2 == 1 || xo2 == 2)
                 { }
                 else if (xo2 == 0)
                 {
-                    if (wplayer_choiced == 1)
+                    if (whatPlayerChoice == 1)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo2 == 2)
                                 { }
@@ -210,9 +210,9 @@ namespace Minigame_Launcher
                                     but_xo2.Image = Image.FromFile(pathtocross);
                                     xo2 = 1;
                                 }
-                                easy_bot_intelect_o();
+                                easy_bot_intellect_o();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo2 == 2)
                                 { }
@@ -223,9 +223,9 @@ namespace Minigame_Launcher
                                     but_xo2.Image = Image.FromFile(pathtocross);
                                     xo2 = 1;
                                 }
-                                medium_bot_intelect_o();
+                                medium_bot_intellect_o();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo2 == 2)
                                 { }
@@ -236,16 +236,16 @@ namespace Minigame_Launcher
                                     but_xo2.Image = Image.FromFile(pathtocross);
                                     xo2 = 1;
                                 }
-                                hard_bot_intelect_o();
+                                hard_bot_intellect_o();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
-                    else if (wplayer_choiced == 0)
+                    else if (whatPlayerChoice == 0)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo2 == 2)
                                 { }
@@ -256,9 +256,9 @@ namespace Minigame_Launcher
                                     but_xo2.Image = Image.FromFile(pathtocircle);
                                     xo2 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo2 == 2)
                                 { }
@@ -269,9 +269,9 @@ namespace Minigame_Launcher
                                     but_xo2.Image = Image.FromFile(pathtocircle);
                                     xo2 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo2 == 2)
                                 { }
@@ -282,9 +282,9 @@ namespace Minigame_Launcher
                                     but_xo2.Image = Image.FromFile(pathtocircle);
                                     xo2 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -293,19 +293,19 @@ namespace Minigame_Launcher
 
         private void but_xo3_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0)
+            if (playerChoiceXOrO == 0)
             { }
-            else if (if_player_chice_done == 1)
+            else if (playerChoiceXOrO == 1)
             {
                 if (xo3 == 1 || xo3 == 2)
                 { }
                 else if (xo3 == 0)
                 {
-                    if (wplayer_choiced == 1)
+                    if (whatPlayerChoice == 1)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo3 == 2)
                                 { }
@@ -316,9 +316,9 @@ namespace Minigame_Launcher
                                     but_xo3.Image = Image.FromFile(pathtocross);
                                     xo3 = 1;
                                 }
-                                easy_bot_intelect_o();
+                                easy_bot_intellect_o();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo3 == 2)
                                 { }
@@ -329,9 +329,9 @@ namespace Minigame_Launcher
                                     but_xo3.Image = Image.FromFile(pathtocross);
                                     xo3 = 1;
                                 }
-                                medium_bot_intelect_o();
+                                medium_bot_intellect_o();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo3 == 2)
                                 { }
@@ -342,16 +342,16 @@ namespace Minigame_Launcher
                                     but_xo3.Image = Image.FromFile(pathtocross);
                                     xo3 = 1;
                                 }
-                                hard_bot_intelect_o();
+                                hard_bot_intellect_o();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
-                    else if (wplayer_choiced == 0)
+                    else if (whatPlayerChoice == 0)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo3 == 2)
                                 { }
@@ -362,9 +362,9 @@ namespace Minigame_Launcher
                                     but_xo3.Image = Image.FromFile(pathtocircle);
                                     xo3 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo3 == 2)
                                 { }
@@ -375,9 +375,9 @@ namespace Minigame_Launcher
                                     but_xo3.Image = Image.FromFile(pathtocircle);
                                     xo3 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo3 == 2)
                                 { }
@@ -388,9 +388,9 @@ namespace Minigame_Launcher
                                     but_xo3.Image = Image.FromFile(pathtocircle);
                                     xo3 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -399,26 +399,26 @@ namespace Minigame_Launcher
 
         private void but_xo4_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0)
+            if (playerChoiceXOrO == 0)
             {
                 but_xo1.Text = null; but_xo2.Text = null; but_xo3.Text = null;
                 but_xo4.Image = null; but_xo5.Text = null; but_xo6.Image = null;
                 but_xo7.Text = null; but_xo8.Text = null; but_xo9.Text = null;
-                wplayer_choiced = 1;
-                if_player_chice_done = 1;
+                whatPlayerChoice = 1;
+                playerChoiceXOrO = 1;
             }
-            else if (if_player_chice_done == 1)
+            else if (playerChoiceXOrO == 1)
             {
 
                 if (xo4 == 1 || xo4 == 2)
                 { }
                 else if (xo4 == 0)
                 {
-                    if (wplayer_choiced == 1)
+                    if (whatPlayerChoice == 1)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo4 == 2)
                                 { }
@@ -429,9 +429,9 @@ namespace Minigame_Launcher
                                     but_xo4.Image = Image.FromFile(pathtocross);
                                     xo4 = 1;
                                 }
-                                easy_bot_intelect_o();
+                                easy_bot_intellect_o();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo4 == 2)
                                 { }
@@ -442,9 +442,9 @@ namespace Minigame_Launcher
                                     but_xo4.Image = Image.FromFile(pathtocross);
                                     xo4 = 1;
                                 }
-                                medium_bot_intelect_o();
+                                medium_bot_intellect_o();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo4 == 2)
                                 { }
@@ -455,16 +455,16 @@ namespace Minigame_Launcher
                                     but_xo4.Image = Image.FromFile(pathtocross);
                                     xo4 = 1;
                                 }
-                                hard_bot_intelect_o();
+                                hard_bot_intellect_o();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
-                    else if (wplayer_choiced == 0)
+                    else if (whatPlayerChoice == 0)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo4 == 2)
                                 { }
@@ -475,9 +475,9 @@ namespace Minigame_Launcher
                                     but_xo4.Image = Image.FromFile(pathtocircle);
                                     xo4 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo4 == 2)
                                 { }
@@ -488,9 +488,9 @@ namespace Minigame_Launcher
                                     but_xo4.Image = Image.FromFile(pathtocircle);
                                     xo4 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo4 == 2)
                                 { }
@@ -501,9 +501,9 @@ namespace Minigame_Launcher
                                     but_xo4.Image = Image.FromFile(pathtocircle);
                                     xo4 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -512,19 +512,19 @@ namespace Minigame_Launcher
 
         private void but_xo5_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0)
+            if (playerChoiceXOrO == 0)
             { }
-            else if (if_player_chice_done == 1)
+            else if (playerChoiceXOrO == 1)
             {
                 if (xo5 == 1 || xo5 == 2)
                 { }
                 else if (xo5 == 0)
                 {
-                    if (wplayer_choiced == 1)
+                    if (whatPlayerChoice == 1)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo5 == 2)
                                 { }
@@ -535,9 +535,9 @@ namespace Minigame_Launcher
                                     but_xo5.Image = Image.FromFile(pathtocross);
                                     xo5 = 1;
                                 }
-                                easy_bot_intelect_o();
+                                easy_bot_intellect_o();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo5 == 2)
                                 { }
@@ -548,9 +548,9 @@ namespace Minigame_Launcher
                                     but_xo5.Image = Image.FromFile(pathtocross);
                                     xo5 = 1;
                                 }
-                                medium_bot_intelect_o();
+                                medium_bot_intellect_o();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo5 == 2)
                                 { }
@@ -561,16 +561,16 @@ namespace Minigame_Launcher
                                     but_xo5.Image = Image.FromFile(pathtocross);
                                     xo5 = 1;
                                 }
-                                hard_bot_intelect_o();
+                                hard_bot_intellect_o();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
-                    else if (wplayer_choiced == 0)
+                    else if (whatPlayerChoice == 0)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo5 == 2)
                                 { }
@@ -581,9 +581,9 @@ namespace Minigame_Launcher
                                     but_xo5.Image = Image.FromFile(pathtocircle);
                                     xo5 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo5 == 2)
                                 { }
@@ -594,9 +594,9 @@ namespace Minigame_Launcher
                                     but_xo5.Image = Image.FromFile(pathtocircle);
                                     xo5 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo5 == 2)
                                 { }
@@ -607,9 +607,9 @@ namespace Minigame_Launcher
                                     but_xo5.Image = Image.FromFile(pathtocircle);
                                     xo5 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -618,27 +618,27 @@ namespace Minigame_Launcher
 
         private void but_xo6_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0)
+            if (playerChoiceXOrO == 0)
             {
                 but_xo1.Text = null; but_xo2.Text = null; but_xo3.Text = null;
                 but_xo4.Image = null; but_xo5.Text = null; but_xo6.Image = null;
                 but_xo7.Text = null; but_xo8.Text = null; but_xo9.Text = null;
-                wplayer_choiced = 0;
-                if_player_chice_done = 1;
-                if (wplayer_choiced == 0)
-                { easy_bot_intelect_x(); }
+                whatPlayerChoice = 0;
+                playerChoiceXOrO = 1;
+                if (whatPlayerChoice == 0)
+                { easy_bot_intellect_x(); }
             }
-            else if (if_player_chice_done == 1)
+            else if (playerChoiceXOrO == 1)
             {
                 if (xo6 == 1 || xo6 == 2)
                 { }
                 else if (xo6 == 0)
                 {
-                    if (wplayer_choiced == 1)
+                    if (whatPlayerChoice == 1)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo6 == 2)
                                 { }
@@ -649,9 +649,9 @@ namespace Minigame_Launcher
                                     but_xo6.Image = Image.FromFile(pathtocross);
                                     xo6 = 1;
                                 }
-                                easy_bot_intelect_o();
+                                easy_bot_intellect_o();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo6 == 2)
                                 { }
@@ -662,9 +662,9 @@ namespace Minigame_Launcher
                                     but_xo6.Image = Image.FromFile(pathtocross);
                                     xo6 = 1;
                                 }
-                                medium_bot_intelect_o();
+                                medium_bot_intellect_o();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo6 == 2)
                                 { }
@@ -675,16 +675,16 @@ namespace Minigame_Launcher
                                     but_xo6.Image = Image.FromFile(pathtocross);
                                     xo6 = 1;
                                 }
-                                hard_bot_intelect_o();
+                                hard_bot_intellect_o();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
-                    else if (wplayer_choiced == 0)
+                    else if (whatPlayerChoice == 0)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo6 == 2)
                                 { }
@@ -695,9 +695,9 @@ namespace Minigame_Launcher
                                     but_xo6.Image = Image.FromFile(pathtocircle);
                                     xo6 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo6 == 2)
                                 { }
@@ -708,9 +708,9 @@ namespace Minigame_Launcher
                                     but_xo6.Image = Image.FromFile(pathtocircle);
                                     xo6 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo6 == 2)
                                 { }
@@ -721,9 +721,9 @@ namespace Minigame_Launcher
                                     but_xo6.Image = Image.FromFile(pathtocircle);
                                     xo6 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -732,19 +732,19 @@ namespace Minigame_Launcher
 
         private void but_xo7_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0)
+            if (playerChoiceXOrO == 0)
             { }
-            else if (if_player_chice_done == 1)
+            else if (playerChoiceXOrO == 1)
             {
                 if (xo7 == 1 || xo7 == 2)
                 { }
                 else if (xo7 == 0)
                 {
-                    if (wplayer_choiced == 1)
+                    if (whatPlayerChoice == 1)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo7 == 2)
                                 { }
@@ -755,9 +755,9 @@ namespace Minigame_Launcher
                                     but_xo7.Image = Image.FromFile(pathtocross);
                                     xo7 = 1;
                                 }
-                                easy_bot_intelect_o();
+                                easy_bot_intellect_o();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo7 == 2)
                                 { }
@@ -768,9 +768,9 @@ namespace Minigame_Launcher
                                     but_xo7.Image = Image.FromFile(pathtocross);
                                     xo7 = 1;
                                 }
-                                medium_bot_intelect_o();
+                                medium_bot_intellect_o();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo7 == 2)
                                 { }
@@ -781,16 +781,16 @@ namespace Minigame_Launcher
                                     but_xo7.Image = Image.FromFile(pathtocross);
                                     xo7 = 1;
                                 }
-                                hard_bot_intelect_o();
+                                hard_bot_intellect_o();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
-                    else if (wplayer_choiced == 0)
+                    else if (whatPlayerChoice == 0)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo7 == 2)
                                 { }
@@ -801,9 +801,9 @@ namespace Minigame_Launcher
                                     but_xo7.Image = Image.FromFile(pathtocircle);
                                     xo7 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo7 == 2)
                                 { }
@@ -814,9 +814,9 @@ namespace Minigame_Launcher
                                     but_xo7.Image = Image.FromFile(pathtocircle);
                                     xo7 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo7 == 2)
                                 { }
@@ -827,9 +827,9 @@ namespace Minigame_Launcher
                                     but_xo7.Image = Image.FromFile(pathtocircle);
                                     xo7 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -838,19 +838,19 @@ namespace Minigame_Launcher
 
         private void but_xo8_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0)
+            if (playerChoiceXOrO == 0)
             { }
-            else if (if_player_chice_done == 1)
+            else if (playerChoiceXOrO == 1)
             {
                 if (xo8 == 1 || xo8 == 2)
                 { }
                 else if (xo8 == 0)
                 {
-                    if (wplayer_choiced == 1)
+                    if (whatPlayerChoice == 1)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo8 == 2)
                                 { }
@@ -861,9 +861,9 @@ namespace Minigame_Launcher
                                     but_xo8.Image = Image.FromFile(pathtocross);
                                     xo8 = 1;
                                 }
-                                easy_bot_intelect_o();
+                                easy_bot_intellect_o();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo8 == 2)
                                 { }
@@ -874,9 +874,9 @@ namespace Minigame_Launcher
                                     but_xo8.Image = Image.FromFile(pathtocross);
                                     xo8 = 1;
                                 }
-                                medium_bot_intelect_o();
+                                medium_bot_intellect_o();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo8 == 2)
                                 { }
@@ -887,16 +887,16 @@ namespace Minigame_Launcher
                                     but_xo8.Image = Image.FromFile(pathtocross);
                                     xo8 = 1;
                                 }
-                                hard_bot_intelect_o();
+                                hard_bot_intellect_o();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
-                    else if (wplayer_choiced == 0)
+                    else if (whatPlayerChoice == 0)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo8 == 2)
                                 { }
@@ -907,9 +907,9 @@ namespace Minigame_Launcher
                                     but_xo8.Image = Image.FromFile(pathtocircle);
                                     xo8 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo8 == 2)
                                 { }
@@ -920,9 +920,9 @@ namespace Minigame_Launcher
                                     but_xo8.Image = Image.FromFile(pathtocircle);
                                     xo8 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo8 == 2)
                                 { }
@@ -933,9 +933,9 @@ namespace Minigame_Launcher
                                     but_xo8.Image = Image.FromFile(pathtocircle);
                                     xo8 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -944,19 +944,19 @@ namespace Minigame_Launcher
 
         private void but_xo9_Click(object sender, EventArgs e)
         {
-            if (if_player_chice_done == 0)
+            if (playerChoiceXOrO == 0)
             { }
-            else if (if_player_chice_done == 1)
+            else if (playerChoiceXOrO == 1)
             {
                 if (xo9 == 1 || xo9 == 2)
                 { }
                 else if (xo9 == 0)
                 {
-                    if (wplayer_choiced == 1)
+                    if (whatPlayerChoice == 1)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo9 == 2)
                                 { }
@@ -967,9 +967,9 @@ namespace Minigame_Launcher
                                     but_xo9.Image = Image.FromFile(pathtocross);
                                     xo9 = 1;
                                 }
-                                easy_bot_intelect_o();
+                                easy_bot_intellect_o();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo9 == 2)
                                 { }
@@ -980,9 +980,9 @@ namespace Minigame_Launcher
                                     but_xo9.Image = Image.FromFile(pathtocross);
                                     xo9 = 1;
                                 }
-                                medium_bot_intelect_o();
+                                medium_bot_intellect_o();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo9 == 2)
                                 { }
@@ -993,16 +993,16 @@ namespace Minigame_Launcher
                                     but_xo9.Image = Image.FromFile(pathtocross);
                                     xo9 = 1;
                                 }
-                                hard_bot_intelect_o();
+                                hard_bot_intellect_o();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
-                    else if (wplayer_choiced == 0)
+                    else if (whatPlayerChoice == 0)
                     {
-                        if (xowins == 0)
+                        if (isAnyoneWin == 0)
                         {
-                            if (bot_dif == 0)
+                            if (botDifficult == 0)
                             {
                                 if (xo9 == 2)
                                 { }
@@ -1013,9 +1013,9 @@ namespace Minigame_Launcher
                                     but_xo9.Image = Image.FromFile(pathtocircle);
                                     xo9 = 2;
                                 }
-                                easy_bot_intelect_x();
+                                easy_bot_intellect_x();
                             }
-                            else if (bot_dif == 1)
+                            else if (botDifficult == 1)
                             {
                                 if (xo9 == 2)
                                 { }
@@ -1026,9 +1026,9 @@ namespace Minigame_Launcher
                                     but_xo9.Image = Image.FromFile(pathtocircle);
                                     xo9 = 2;
                                 }
-                                medium_bot_intelect_x();
+                                medium_bot_intellect_x();
                             }
-                            else if (bot_dif == 2)
+                            else if (botDifficult == 2)
                             {
                                 if (xo9 == 2)
                                 { }
@@ -1039,9 +1039,9 @@ namespace Minigame_Launcher
                                     but_xo9.Image = Image.FromFile(pathtocircle);
                                     xo9 = 2;
                                 }
-                                hard_bot_intelect_x();
+                                hard_bot_intellect_x();
                             }
-                            wincheck();
+                            winCheck();
                         }
                     }
                 }
@@ -1051,9 +1051,9 @@ namespace Minigame_Launcher
         private void but_restart_Click(object sender, EventArgs e)
         {
             // змінюємо усі змінні на дефолтні значення, та повертаємо усі кнопки(їх текст та зображення) до стартового стану
-            wplayer_choiced = -1;
-            if_player_chice_done = 0;
-            xowins = 0;
+            whatPlayerChoice = -1;
+            playerChoiceXOrO = 0;
+            isAnyoneWin = 0;
             xox = 0;
             xo1 = 0; xo2 = 0; xo3 = 0; xo4 = 0; xo5 = 0; xo6 = 0; xo7 = 0; xo8 = 0; xo9 = 0;
             but_xo1.Image = null;
@@ -1080,7 +1080,7 @@ namespace Minigame_Launcher
             return r.Next(a, b); // повертаємо значення методу як рандомний вибір числа від а до b
         }
         // метод інтелекту комп'ютера на легкій складності який грає за О
-        public void easy_bot_intelect_o()
+        public void easy_bot_intellect_o()
         {
             if ((xo1 == 1 && xo2 == 1 && xo3 == 1) ||
                 (xo4 == 1 && xo5 == 1 && xo6 == 1) ||  // переліковуємо усі переможні патерни супротивника це потрібно для того щоб
@@ -1091,7 +1091,7 @@ namespace Minigame_Launcher
                 (xo1 == 1 && xo5 == 1 && xo9 == 1) ||
                 (xo3 == 1 && xo5 == 1 && xo7 == 1))
             {
-                wincheck(); // присуджуємо перемогу тому хто переміг якщо такий є
+                winCheck(); // присуджуємо перемогу тому хто переміг якщо такий є
             }
             else
             { // при ситуації коли комп'ютер ходить останній крок у сесії без перевірки усього поля на заповненість гра вилітає
@@ -1100,7 +1100,7 @@ namespace Minigame_Launcher
                     (xo7 == 1 || xo7 == 2) && (xo8 == 1 || xo8 == 2) && (xo9 == 1 || xo9 == 2))
                 { }
                 else
-                { // поки не випаде вільна комірка циул буде продовжувати шукати такову
+                { // поки не випаде вільна комірка цикл буде продовжувати шукати такову
                     while (xox == 0)
                     {
                         int bc = bot_choice(1, 10); // обираємо рандомне число від 1 до 10(не включно)
@@ -1209,7 +1209,7 @@ namespace Minigame_Launcher
             }
         }
         // метод інтелекту комп'ютера на легкій складності який грає за Х 
-        public void easy_bot_intelect_x()
+        public void easy_bot_intellect_x()
         { // метод ідентичний easy_bot_intelect_o, але для бота що грає за Х
             if ((xo1 == 2 && xo2 == 2 && xo3 == 2) ||
                 (xo4 == 2 && xo5 == 2 && xo6 == 2) ||
@@ -1221,7 +1221,7 @@ namespace Minigame_Launcher
                 (xo1 == 2 && xo5 == 2 && xo9 == 2) ||
                 (xo3 == 2 && xo5 == 2 && xo7 == 2))
             {
-                wincheck();
+                winCheck();
             }
             else
             {
@@ -1339,7 +1339,7 @@ namespace Minigame_Launcher
             }
         }
         // метод інтелекту комп'ютера на середній складності який грає за О
-        public void medium_bot_intelect_o()
+        public void medium_bot_intellect_o()
         {
             if ((xo1 == 1 && xo2 == 1 && xo3 == 1) ||
                 (xo4 == 1 && xo5 == 1 && xo6 == 1) ||  // переліковуємо усі переможні патерни супротивника це потрібно для того щоб
@@ -1350,7 +1350,7 @@ namespace Minigame_Launcher
                 (xo1 == 1 && xo5 == 1 && xo9 == 1) ||
                 (xo3 == 1 && xo5 == 1 && xo7 == 1))
             {
-                wincheck(); // присуджуємо перемогу тому хто переміг якщо такий є
+                winCheck(); // присуджуємо перемогу тому хто переміг якщо такий є
             }
             else
             {// поки не випаде вільна комірка циул буде продовжувати шукати такову
@@ -1481,12 +1481,12 @@ namespace Minigame_Launcher
                         xo5 = 2;
                     }
                     else // якщо переможних патернів ще не має, то використовуємо рандомне заповнення поля
-                        easy_bot_intelect_o();
+                        easy_bot_intellect_o();
                 }
             }
         }
         // метод інтелекту комп'ютера на середній складності який грає за Х
-        public void medium_bot_intelect_x()
+        public void medium_bot_intellect_x()
         {// метод ідентичний medium_bot_intelect_o, але для бота що грає за Х
             if ((xo1 == 2 && xo2 == 2 && xo3 == 2) ||
                 (xo4 == 2 && xo5 == 2 && xo6 == 2) ||
@@ -1497,7 +1497,7 @@ namespace Minigame_Launcher
                 (xo1 == 2 && xo5 == 2 && xo9 == 2) ||
                 (xo3 == 2 && xo5 == 2 && xo7 == 2))
             {
-                wincheck();
+                winCheck();
             }
             else
             {
@@ -1628,12 +1628,12 @@ namespace Minigame_Launcher
                         xo5 = 1;
                     }
                     else
-                        easy_bot_intelect_x();
+                        easy_bot_intellect_x();
                 }
             }
         }
         // метод інтелекту комп'ютера на важкій складності який грає за О
-        public void hard_bot_intelect_o()
+        public void hard_bot_intellect_o()
         {
             if ((xo1 == 1 && xo2 == 1 && xo3 == 1) ||
                 (xo4 == 1 && xo5 == 1 && xo6 == 1) ||  // переліковуємо усі переможні патерни супротивника це потрібно для того щоб
@@ -1644,7 +1644,7 @@ namespace Minigame_Launcher
                 (xo1 == 1 && xo5 == 1 && xo9 == 1) ||
                 (xo3 == 1 && xo5 == 1 && xo7 == 1))
             {
-                wincheck(); // присуджуємо перемогу тому хто переміг якщо такий є
+                winCheck(); // присуджуємо перемогу тому хто переміг якщо такий є
             }
             else
             {// поки не випаде вільна комірка циул буде продовжувати шукати такову
@@ -1775,12 +1775,12 @@ namespace Minigame_Launcher
                         xo5 = 2;
                     }
                     else
-                        medium_bot_intelect_o();
+                        medium_bot_intellect_o();
                 }
             }
         }
         // метод інтелекту комп'ютера на важкій складності який грає за X
-        public void hard_bot_intelect_x()
+        public void hard_bot_intellect_x()
         {
             if ((xo1 == 2 && xo2 == 2 && xo3 == 2) ||
                 (xo4 == 2 && xo5 == 2 && xo6 == 2) ||  // переліковуємо усі переможні патерни супротивника це потрібно для того щоб
@@ -1791,7 +1791,7 @@ namespace Minigame_Launcher
                 (xo1 == 2 && xo5 == 2 && xo9 == 2) ||
                 (xo3 == 2 && xo5 == 2 && xo7 == 2))
             {
-                wincheck(); // присуджуємо перемогу тому хто переміг якщо такий є
+                winCheck(); // присуджуємо перемогу тому хто переміг якщо такий є
             }
             else
             {// поки не випаде вільна комірка циул буде продовжувати шукати такову
@@ -1922,12 +1922,12 @@ namespace Minigame_Launcher
                         xo5 = 1;
                     }
                     else
-                        medium_bot_intelect_x();
+                        medium_bot_intellect_x();
                 }
             }
         }
         // метод для перевірки вийгрошу гравців
-        public void wincheck()
+        public void winCheck()
         {
             if ((xo1 == 1 && xo2 == 1 && xo3 == 1) ||
                 (xo4 == 1 && xo5 == 1 && xo6 == 1) ||  // перебераємо усі переможні комбінації
@@ -1939,7 +1939,7 @@ namespace Minigame_Launcher
                 (xo3 == 1 && xo5 == 1 && xo7 == 1))
             {
                 label_context.Text = "X wins";
-                xowins = 1; // ставимо у змінну перемог що один з ігроків переміг та який саме (перший ігрок)
+                isAnyoneWin = 1; // ставимо у змінну перемог що один з ігроків переміг та який саме (перший ігрок)
             }
             else if ((xo1 == 2 && xo2 == 2 && xo3 == 2) ||
                      (xo4 == 2 && xo5 == 2 && xo6 == 2) ||  // перебераємо усі переможні комбінації
@@ -1952,9 +1952,9 @@ namespace Minigame_Launcher
                      (xo3 == 2 && xo5 == 2 && xo7 == 2))
             {
                 label_context.Text = "O Wins";
-                xowins = 2; // ставимо у змінну перемог що один з ігроків переміг та який саме (другий ігрок)
+                isAnyoneWin = 2; // ставимо у змінну перемог що один з ігроків переміг та який саме (другий ігрок)
             }
-            else if (xo1 != 0 && xo2 != 0 && xo3 != 0 && xo4 != 0 && xo5 != 0 && xo6 != 0 && xo7 != 0 && xo8 != 0 && xo9 != 0 && xowins == 0)
+            else if (xo1 != 0 && xo2 != 0 && xo3 != 0 && xo4 != 0 && xo5 != 0 && xo6 != 0 && xo7 != 0 && xo8 != 0 && xo9 != 0 && isAnyoneWin == 0)
             { // якщо ніхто не перемог та усі кнопки займані будь-яким іграком пишемо про нічию у контекстну строку
                 label_context.Text = "Draw!";
             }
